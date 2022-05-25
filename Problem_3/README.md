@@ -9,6 +9,7 @@ There is a .json file in the path "/api/v1/status/status.json". This .json file 
 There are some important notes to use the code. Before testing the code, please pay attention to below notes.
 
 I tested the GET request in this format and it worked:
+<<<<<<< HEAD
 		curl -X GET localhost:8000/api/v1/status
 additionally you can use the full path like this:
     curl -X GET localhost:8000/api/v1/status/status.json
@@ -23,3 +24,20 @@ additionally you can use the full path like this:
 	![Result_1](/Results/01.png)
 	
 	![Result_1](/Results/02.png)
+=======
+
+    curl -X GET localhost:8000/api/v1/status
+    
+Additionally you can use the full path like this:
+
+    curl -X GET localhost:8000/api/v1/status/status.json
+
+Also I tested the POST request in this format and it worked:
+
+    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status
+    
+Additionally you can use the full path like this:
+
+    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status/status.json
+
+>>>>>>> 5539733a77a9ff0303a5ff650f81b8d54b814c5e
