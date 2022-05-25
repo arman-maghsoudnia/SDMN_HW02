@@ -17,3 +17,9 @@ Also I tested the POST request in this format and it worked:
     curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status
 additionally you can use the full path like this:
     curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status/status.json
+    
+## Results
+
+	![Result_1](/Results/01.png)
+	
+	![Result_1](/Results/02.png)
