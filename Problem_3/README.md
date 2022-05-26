@@ -9,35 +9,28 @@ There is a .json file in the path "/api/v1/status/status.json". This .json file 
 There are some important notes to use the code. Before testing the code, please pay attention to below notes.
 
 I tested the GET request in this format and it worked:
-<<<<<<< HEAD
-		curl -X GET localhost:8000/api/v1/status
-additionally you can use the full path like this:
-    curl -X GET localhost:8000/api/v1/status/status.json
 
-Also I tested the POST request in this format and it worked:
-    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status
-additionally you can use the full path like this:
-    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status/status.json
-    
-## Results
-
-	![Result_1](/Results/01.png)
-	
-	![Result_1](/Results/02.png)
-=======
-
-    curl -X GET localhost:8000/api/v1/status
+	curl -X GET localhost:8000/api/v1/status
     
 Additionally you can use the full path like this:
 
-    curl -X GET localhost:8000/api/v1/status/status.json
+	curl -X GET localhost:8000/api/v1/status/status.json
 
 Also I tested the POST request in this format and it worked:
 
-    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status
+	curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status
     
 Additionally you can use the full path like this:
 
-    curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status/status.json
+	curl -X POST --data '{ "status": "not OK" }' localhost:8000/api/v1/status/status.json
+    
+### Results
 
->>>>>>> 5539733a77a9ff0303a5ff650f81b8d54b814c5e
+Below ScreenShot shows the execution of GET and POST requests and their responses:
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_3/Results/01.png?raw=true)
+
+
+Below ScreenShot shows the HTTP server logs after receiving GET and POST requests:
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_3/Results/02.png?raw=true)
