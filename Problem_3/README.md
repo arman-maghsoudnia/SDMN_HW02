@@ -5,7 +5,7 @@ This is the guide and report for SDMN homework 2, problem 3. Please read it very
 
 ## "HTTP_Server.py" code
 ### Running and Testing the Code
-As you can see, there is a code named "HTTP_Server.py" in this folder. This is the desired HTTP Server as the homework description wanted. You can run this code on your system with python3.8. In the next section we will discuss about dockerizing the code. Now we focus on running the code on system.
+As you can see, there is a code named "HTTP_Server.py" in the "Python_Code" directory. This is the desired HTTP Server as the homework description wanted. You can run this code on your system with python3.8. Note that the existance of the "api" directory is mandatory for code to run properly. In the next section we will discuss about dockerizing the code. Now we focus on running the code on our main system (OS).
 
 There is a .json file in the path "/api/v1/status/status.json". This .json file is responded when a GET request is sent to the server. Also the data of the POST request is written in the mentioned .json file. 
 
