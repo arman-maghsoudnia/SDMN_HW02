@@ -1,6 +1,4 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from os import curdir
-from os.path import join as pjoin
 
 class handler(BaseHTTPRequestHandler):
     store_path = 'api/v1/status/status.json'
