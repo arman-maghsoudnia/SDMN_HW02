@@ -42,3 +42,11 @@ If you don't give the third input, the code will ping the default interface, whi
 
 ### Results
 We provided some screenshots of the pinging process. You can see the results below:
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_1/Results/01.png?raw=true)
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_1/Results/02.png?raw=true)
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_1/Results/03.png?raw=true)
+
+
