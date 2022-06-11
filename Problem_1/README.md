@@ -74,7 +74,7 @@ The rules applied in the nodes make it possible to ping a node from another subn
 Note that the topology is made by a similar bash script as "create_net.sh" which was used in the previous part. The only change is that we have to remove the router namespace and related links and configurations. We have made and checked the topology, but we did NOT upload the codes because the homework file says that no implementation is needed.
 
 ## Part 3: Namespaces on different servers, connected with layer 2 switch
-As mentioned in the homework, we need to provide some rules in both servers, which are connected together with a layer 2 switch. So here the connectivity of different subnet is provided physically by a layer 2 switch. **Suppose that each server has an interface with a name "eth{i}" (server 1: eth1 and server 2: eth2) and this interface is connected physically to the layer 2 switch.** Below are the rules we applied on each server:
+As mentioned in the homework, we need to provide some rules in both servers, which are connected together with a layer 2 switch. So here the connectivity of different subnets is provided physically by a layer 2 switch. **Suppose that each server has an interface with a name "eth{i}" (server 1: eth1 and server 2: eth2) and this interface is connected physically to the layer 2 switch.** Below are the rules we applied on each server:
 
 Rules in the nodes (namespaces):
 
