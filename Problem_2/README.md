@@ -73,13 +73,21 @@ Also if you give the second input argument a folder will be created in /sys/fs/c
 Congratulations. Now you are in the container!
 
 ## Results
-We ran three containers simultaneously, and we provided some screenshots, which you can see below. 
+We ran three containers simultaneously, and we provided some screenshots, which you can see below. Note that the we gave the second input argument for the first and second containers but we did NOT give that input to the third container. 
 
 ![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_2/Results/01.png?raw=true)
+First container.
 
 ![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_2/Results/02.png?raw=true)
+Second container. Note that we ran a "sleep" process in the background. 
 
 ![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_2/Results/03.png?raw=true)
+Third container.
+
+![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_2/Results/04.png?raw=true)
+From the screenshot above, you can see that after running three containers, there are three root folders in the mentioned directory. Also, threre are two cgroup folders in the mentioned directory too. Note that we did NOT give the second input for the third container, so no cgroup folder was made for it. \
+Also you can see the assigend memory limits in the "memory.limit_in_bytes" files. \
+Also you can see the pids which are runnung under each cgroup. As you can see the "unshare" command and the "bash" which is running in the first container are running under the cgroup, so they are memory restricted. Also the "unshare", "bash" and "sleep" command which are running in the second container are running under their cgroup too.
 
 
 
