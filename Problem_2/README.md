@@ -87,7 +87,7 @@ Third container.
 ![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_2/Results/04.png?raw=true)
 From the screenshot above, you can see that after running three containers, there are three root folders in the mentioned directory. Also, threre are two cgroup folders in the mentioned directory too. Note that we did NOT give the second input for the third container, so no cgroup folder was made for it. \
 Also you can see the assigend memory limits in the "memory.limit_in_bytes" files. \
-Also you can see the pids which are runnung under each cgroup. As you can see the "unshare" command and the "bash" which is running in the first container are running under the cgroup, so they are memory restricted. Also the "unshare", "bash" and "sleep" command which are running in the second container are running under their cgroup too.
+Also you can see the pids which are runnung under each cgroup. As you can see the "unshare" command and the "bash" which are running in the first container are running under the cgroup, so they are memory restricted. Also the "unshare", "bash" and "sleep" commands which are running in the second container are running under their cgroup too.
 
 
 
