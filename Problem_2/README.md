@@ -1,9 +1,12 @@
-# This is the Report and Results of Problem 3 (Container Runtime)
+# This is the Report and Results of Problem 2 (Container Runtime)
 
 ### Description
 This is the guide and report for SDMN homework 2, problem 2. Please read it very carefully. The answer to the questions asked in the homework is documented here.
 
 ## Creating the container 
+### "requirements.sh"
+Please run this bash script to install required packages.
+
 ### "my_cli.sh" 
 We provided a bash script named "my_cli.sh". Running this bash script is equivalent to running a new container with the desired functionality. Further explanation about implementation is documented below.
 
@@ -17,7 +20,13 @@ After creating an empty folder as the root folder, we copy the ubuntu:20.04 file
 We downloaded the filesystems from the following link: [ubuntu-focal-oci-amd64-root](https://github.com/tianon/docker-brew-ubuntu-core/blob/5ed9ebdc8e9050d5b327c7ce3cda08b62cd28f67/focal/ubuntu-focal-oci-amd64-root.tar.gz) \
 So we extract ubuntu-focal-oci-amd64-root.tar.gz to the new root folder directory. Now the root folder is entirely ready.
 
-Now is the time to run our container and configure the namespaces. We use the following line to run the container: <strong>unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"</strong>. This command will change the desired namespaces and also will change the root directory of the container. 
+We also implemented the bonus part of the problem, which is running the container under memory restriction. If you give a second input as a number, we limit the available memory for the container to the given number in MegaBytes. To do so, we used "cgroup-tools". First of all, we make a folder in the path:/sys/fs/cgroup/memory. The folder is named "my_container_Group_$j". The naming process is similar to naming the root folder. After making the folder, we echo the given number to the file "/sys/fs/cgroup/memory/my_container_Group_$j/memory.limit_in_bytes". After doing this, any process running under this folder as its cgroup will have a memory limit to the given number.  
+
+Now is the time to run our container and configure the namespaces. If the second input argument is NOT supplied, we use the following line to run the container: <strong>unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"</strong>. This command will change the desired namespaces and also will change the root directory of the container.
+
+If the second input argument is supplied, we run the container under the made cgroup folder. So we use the following line: <strong>cgexec -g memory:my_container_Group_$j unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"</strong>. Running the container using mentioned command will restrict the memory usage to the assigned number. 
+
+We used "cgroup-tools" to configure the memory limit. More precisely we used "cgcreate" to make the cgroup folder and "cgexec" to run the container under the cgroup folder. 
 
 "unshare" is a Linux command used to create containers with given namespaces. You can find the complete documentation in the following link: [unshare doc](https://man7.org/linux/man-pages/man1/unshare.1.html)
 
@@ -54,11 +63,12 @@ At the end of the command we insert ' bash -c "hostname $1 && /bin/bash" '. This
 At the end of "my_cli.sh" code, we remove the created root folder for the container. This line will be applied after exiting the container. So the container will be completely wiped out after exiting it. 
 
 ## Running the container
-Running the container is as simple as running the "my_cli.sh" code and giving the desired hostname.
+Running the container is as simple as running the "my_cli.sh" code and giving the desired hostname and (optionally) memory limit as a number. 
 
-    sudo ./my_cli.sh your-desired-hostname
+    sudo ./my_cli.sh your-desired-hostname memory_limit(optional)
     
-After running the container, a root folder will be created in the "my_container_roots" folder. The root folder's name will be shown in the terminal immediately after running the container. 
+After running the container, a root folder will be created in the "my_container_roots" folder. The root folder's name will be shown in the terminal immediately after running the container. \
+Also if you give the second input argument a folder will be created in /sys/fs/cgroup/memory. The folder's name will be shown in the terminal immediately after running the container.
 
 Congratulations. Now you are in the container!
 
