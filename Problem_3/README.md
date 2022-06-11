@@ -55,7 +55,9 @@ Note that the maping of the ports is very important. If you don't do the mapping
 
 ### Building the image using "Dockerfile" 
 
-Another way to run the image on your computer is to build it on your own. To do so, build the image using the "Dockerfile" which is in the "Docker_Files" directory of this repo. Then you have to run the built image. 
+Another way to run the image on your computer is to build it on your own. To do so, build the image using the "Dockerfile" which is in the "Docker_Files" directory of this repo. Then you have to run the built image. After reaching to the "Docker_Files" folder, you can use the following command to build the image:
+
+	docker build . -t name:tag
 
 ### Results
 
