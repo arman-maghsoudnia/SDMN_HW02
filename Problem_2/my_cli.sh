@@ -38,24 +38,32 @@ else
     do
     	j=$(( j + 1 ))
     done
+    
+    # Making the directory with the given name in the path: /sys/fs/cgroup/memory/
+    cgcreate -g memory:my_container_Group_$j
+    echo "The container's cgroup folder is in the path:" $MEMORY_DIR""my_container_Group_$j
+    
+    # We configure the amount of memory which can be used by processes which are assigned to this cgroup. 
+    echo $2M | tee /sys/fs/cgroup/memory/my_container_Group_$j/memory.limit_in_bytes 1> /dev/null
+    echo "Memory usage of the container is restricted to: $2 MegaBytes"
 fi
-
-# Making the directory with the given name in the path: /sys/fs/cgroup/memory/
-cgcreate -g memory:my_container_Group_$j
-echo "The container's cgroup folder is in the path:" $MEMORY_DIR""my_container_Group_$j
-
-# We configure the amount of memory which can be used by processes which are assigned to this cgroup. 
-echo "Memory usage of the container is restricted to:"
-echo $2M | tee /sys/fs/cgroup/memory/my_container_Group_$j/memory.limit_in_bytes 1> /dev/null
 
 # We make the new container and configure desired namespaces. More explanation is provided in README.md on github.
 # Also note that we run the container under mentioned cgroup directory which restricts the amount of memory which can be used by the container and the bash which is run in the container.  
-cgexec -g memory:my_container_Group_$j unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"
+if ! [ -z "$2" ]  # If the memory input is supplied, we run the container under memory restriction.
+  then
+  cgexec -g memory:my_container_Group_$j unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"
+else  # If the memory input is NOT supplied, we run the container normally.
+  unshare --fork --pid --mount-proc --mount --uts --net --root=my_container_roots/container_$i bash -c "hostname $1 && /bin/bash"
+fi
 
 # When the container is exited, we remove its root folder. 
 rm -r my_container_roots/container_$i
 echo "The container's root folder has been removed."
 
 # When the container is exited, we remove its cgroup folder. 
-rmdir $MEMORY_DIR/my_container_Group_$j
-echo "The container's cgroup folder has been removed."
+if ! [ -z "$2" ]
+  then
+  rmdir $MEMORY_DIR/my_container_Group_$j
+  echo "The container's cgroup folder has been removed."
+fi
