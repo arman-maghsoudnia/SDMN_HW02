@@ -72,3 +72,29 @@ Rules in the root namespace:
 The rules applied in the nodes make it possible to ping a node from another subnet. And the rules applied in the root namespace make a route between bridges to connect them in the kernel. Note that NO physical links were used, and we connected the network by our rules. 
 
 Note that the topology is made by a similar bash script as "create_net.sh" which was used in the previous part. The only change is that we have to remove the router namespace and related links and configurations. We have made and checked the topology, but we did NOT upload the codes because the homework file says that no implementation is needed.
+
+## Part 3: Namespaces on different servers, connected with layer 2 switch
+As mentioned in the homework, we need to provide some rules in both servers, which are connected together with a layer 2 switch. So here the connectivity of different subnet is provided physically by a layer 2 switch. **Suppose that each server has an interface with a name "eth{i}" (server 1: eth1 and server 2: eth2) and this interface is connected physically to the layer 2 switch.** Below are the rules we applied on each server:
+
+Rules in the nodes (namespaces):
+
+        ip netns exec node1 ip route add 10.10.0.0/24 dev veth-node1
+        ip netns exec node2 ip route add 10.10.0.0/24 dev veth-node2
+        ip netns exec node3 ip route add 172.0.0.0/24 dev veth-node3
+        ip netns exec node4 ip route add 172.0.0.0/24 dev veth-node4
+
+Rules on Server 1:
+
+        ip route 10.10.0.0/24 dev eth1  # Outgoing packets which have to be sent from Server 1 to Server 2
+        ip route 172.0.0.0/24 dev br1  # Incoming packets which are coming from Server 2 to Server 1
+
+Rules on Server 2:
+
+        ip route 172.0.0.0/24 dev eth2  # Outgoing packets which have to be sent from Server 2 to Server 1
+        ip route 10.10.0.0/24 dev br2  # Incoming packets which are coming from Server 1 to Server 2
+        
+Like the previous part, the rules applied in the nodes make it possible to ping a node from another subnet.
+
+The rules applied in each server handle outgoing packets (packets going to the other sever) and incoming packets (packets coming from the other server to own server). For example, in Server 1, if "node1" tries to ping "node3", this is an outgoing packet with a destination in the range "10.10.0.0/24". So we write a rule to route packets with such destinations to "eth1" . Then "eth1" forwards the packet to the switch, and then the switch forwards it to Server 2. Also, in reply, "node3" answers the ping message of "node1", so this is an incoming packet with a destination address of "172.0.0.0/24", so we write a rule to route packets with such destinations to "br1". Then "br1" forwards the packet to "node1" and the pinging process is done. \
+Similar example can explain rules written in Server 2. 
+
