@@ -1,7 +1,8 @@
 # This is the Report and Results of Problem 1 (Container Networking)
 
 ### Description
-This is the guide and report for SDMN homework 2, problem 1. Please read it very carefully. The answer to the questions asked in the homework is documented here.
+This is the guide and report for SDMN homework 2, problem 1. Please read it very carefully. \
+**THE ANSWER TO THE QUESTIONS ASKED IN THE HOMEWORK IS DOCUMENTED HERE. (REFER TO PART 2 AND PART 3)**
 
 ## Part 1: Creating the Topology using Linux network namespace
 ### "create_net.sh" 
@@ -49,4 +50,25 @@ We provided some screenshots of the pinging process. You can see the results bel
 
 ![alt text](https://github.com/arman-maghsoudnia/SDMN_HW02/blob/main/Problem_1/Results/03.png?raw=true)
 
+## Part 2: Removing the router
+As mentioned in the homework, we need to provide some rules to keep the network connected after removing the router. The connectivity is provided by the kernel and the rules which we provide. Here are the rules which we apply:
 
+Enabling IP Forwarding in root namespace: 
+
+        sysctl -w net.ipv4.ip_forward=1
+
+Rules in the nodes (namespaces):
+
+        ip netns exec node1 ip route add 10.10.0.0/24 dev veth-node1
+        ip netns exec node2 ip route add 10.10.0.0/24 dev veth-node2
+        ip netns exec node3 ip route add 172.0.0.0/24 dev veth-node3
+        ip netns exec node4 ip route add 172.0.0.0/24 dev veth-node4
+        
+Rules in the root namespace:
+
+        ip route add 10.10.0.0/24 dev br2
+        ip route add 172.0.0.0/24 dev br1
+        
+The rules applied in the nodes make it possible to ping a node from another subnet. And the rules applied in the root namespace make a route between bridges to connect them in the kernel. Note that NO physical links were used, and we connected the network by our rules. 
+
+Note that the topology is made by a similar bash script as "create_net.sh" which was used in the previous part. The only change is that we have to remove the router namespace and related links and configurations. We have made and checked the topology, but we did NOT upload the codes because the homework file says that no implementation is needed.
